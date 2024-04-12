@@ -32,3 +32,31 @@
         - Can use hooks, event handlers, etc
         - Cannot directly show a Server Component (with one exception/work around, which we'll see later)
     - Server Components can render Client Components - the browser will make additional request to Next Server to return a JavaScript file with all the client components
+
+* **Dynamic path**:
+    - E.g., `src/app/snippets/[id]` 
+        - Say visit `http://localhost:3000/snippets/123?foo=bar`
+        - props = `{ params: { id: '123' }, searchParams: { foo: 'bar' } }`
+
+* `notFound`:
+    ```js
+    import { notFound } from 'next/navigation';
+
+    // ...
+    if (!something) {
+        return notFound();
+    }
+    ```
+
+* Custom "not found" (404) page
+    - E.g., `src/app/snippets/[id]/not-found.tsx`
+
+* Custom loading page
+    - loading.tsx
+    - simulate a delay: `await new Promise((r) => setTimeout(r, 2000));`
+
+* **React Monaco Editor**:
+    - requires hooks + event handlers to work correctly, so we need a client component
+
+* It's a common pattern to use a server component to fetch data and inject it into a client component
+    - E.g., `SnippetEditPage` (server component, fetches snippet) -> `SnippetEditForm` (client component, includes Monaco Editor)
