@@ -38,6 +38,17 @@
         - Say visit `http://localhost:3000/snippets/123?foo=bar`
         - props = `{ params: { id: '123' }, searchParams: { foo: 'bar' } }`
 
+* Special file names in Next.js:
+
+| Name | Purpose |
+| ---- | ------- |
+| `page.tsx` | Displays the primary content for the page |
+| `layout.tsx` | Wraps the currently displayed page. Use to show content common across many pages. |
+| `not-found.tsx` | Displayed when we call the `notFound` function |
+| `loading.tsx` | Displayed when a server component is fetching some data |
+| `error.tsx` | Displayed when an error occurs in a server component |
+| `route.tsx` | Defines API endpoint |
+
 * `notFound`:
     ```js
     import { notFound } from 'next/navigation';
