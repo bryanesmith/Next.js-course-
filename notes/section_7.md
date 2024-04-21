@@ -179,3 +179,23 @@
             }
         }
         ```
+
+* Recommended approach for planning an application design:
+    1. Identify all the different routes you want your app to have, and the data that each shows
+    2. Make 'path helper' function
+    3. Create your routing folders + page.tsx files based on step #1
+    4. Identify the places where data changes in your app
+    5. Make empty server actions for each of those
+    6. Add in comments on what ptahs you'll need to revalidate for each server action
+
+* Sample application design plan:
+    | Page Name | Path | Data |
+    | --------- | ---- | ---- |
+    | Home      | /    | Many posts, many topics |
+    | Topic Show | /topics/[slug] | A single topic with many posts |
+    | Create a Post | /topics/[slug]/posts/new | A single topic with many posts |
+    | Show a Post | /topics/[slug]/posts/[postId] | A single post and many comments |
+
+* **Slug**: a URL-safe name
+
+* **Path Helpers**: set of functions that return the routes. Used to centrally manage the paths in one place.
