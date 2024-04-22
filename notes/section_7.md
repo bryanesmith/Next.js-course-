@@ -199,3 +199,37 @@
 * **Slug**: a URL-safe name
 
 * **Path Helpers**: set of functions that return the routes. Used to centrally manage the paths in one place.
+
+* Using the 3rd party library **Zod** for validating strings, arrays, etc:
+    ```js
+    import { z } from 'zod';
+
+    const createTopicSchema = z.object({
+        name: z.string().min(3).regex(/^[a-z-]+$/),
+        description: z.string().min(10),
+    });
+
+    // {
+    //      success: true,
+    //      data: {
+    //          name: 'javascript',
+    //          description: 'a place to talk about JS',
+    //      }
+    // }
+    //
+    // Or:
+    //
+    // {
+    //      success: false,
+    //      error: [
+    //          issues: [ ... ]
+    //      ]
+    // }
+
+    response = z.safeParse(someData); 
+
+    // Convenient way to access list of errors per form element
+    if (!result.success) {
+        console.log(result.error.flatten().fieldErrors);
+    }
+    ```
