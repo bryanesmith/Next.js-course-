@@ -22,4 +22,12 @@
     }
     ```
 
-* 
+* Should I put fetch calls in parent components or child components?
+
+|      | Pros | Cons |
+| ---- | ---- | ---- |
+| Option #1: In parent... | <ul><li>Easy to see what data a route needs</li><li>More reusable child components</li><li>Avoid 'n+1 problem'</li></ul> | <ul><li>Can lead to overfetcing unneeded data</li><li>Can lead to duplicate code</li><li>Writing complex TypeScript interface can be annoying</li></ul> | 
+| Option #2: In child... | <ul><li>Easier to build better loading screens</li></ul> | <ul><li>Implementation is more locked in</li></ul> | 
+| Option #3: xxx... | <ul><li></li></ul> | <ul><li></li></ul> | 
+
+* xxx
