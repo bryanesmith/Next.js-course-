@@ -1,12 +1,13 @@
+import type { CommentWithAuthor } from '@/db/queries/comments';
 import Image from 'next/image';
 import CommentCreateForm from '@/components/comments/comment-create-form';
 
 interface CommentShowProps {
   commentId: string;
+  comments: CommentWithAuthor[];
 }
 
-// TODO: Get a list of comments
-export default function CommentShow({ commentId }: CommentShowProps) {
+export default function CommentShow({ commentId, comments }: CommentShowProps) {
   const comment = comments.find((c) => c.id === commentId);
 
   if (!comment) {

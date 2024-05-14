@@ -80,6 +80,7 @@
             return <PostList fetchData={fetchTopPosts} />
         }
         ```
+* Don't over do the above pattern; if a child component isn't likely to be reused, just fetch the data in the child component (option #2)
 
 * You can automatically generating type information if typing it out is a hassle. E.g.,
     - Instead of this:
@@ -100,3 +101,5 @@
 
         export function fetchPostsByTopicSlug(slug: string) { ... }
         ```
+
+* Components can recursively call themselves (e.g., `CommentShow`)
