@@ -26,8 +26,57 @@
 
 |      | Pros | Cons |
 | ---- | ---- | ---- |
-| Option #1: In parent... | <ul><li>Easy to see what data a route needs</li><li>More reusable child components</li><li>Avoid 'n+1 problem'</li></ul> | <ul><li>Can lead to overfetcing unneeded data</li><li>Can lead to duplicate code</li><li>Writing complex TypeScript interface can be annoying</li></ul> | 
-| Option #2: In child... | <ul><li>Easier to build better loading screens</li></ul> | <ul><li>Implementation is more locked in</li></ul> | 
-| Option #3: xxx... | <ul><li></li></ul> | <ul><li></li></ul> | 
+| **Option #1**: In parent... | <ul><li>Easy to see what data a route needs</li><li>More reusable child components</li><li>Avoid 'n+1 problem'</li></ul> | <ul><li>Can lead to poor performance</li><li>Can lead to (slightly) overfetcing unneeded data</li><li>Can lead to duplicate code</li><li>Writing complex TypeScript interface can be annoying</li></ul> | 
+| **Option #2**: In child... | <ul><li>Easier to build better loading screens</li></ul> | <ul><li>Implementation is more locked in</li></ul> | 
+| **Option #3**: parent injects query function to child... | <ul><li></li></ul> | <ul><li></li></ul> | 
 
-* xxx
+* E.g., here are our parents and children components:
+
+| Parent | Children |
+| ------ | -------- | 
+| <ul><li>`TopicShowPage`: display all the posts for given topic</li><li>`HomePage`: displays top posts</li></ul> | <ul><li>`PostList`</li>: accepts `fetchData` method to fetch posts, and then displays posts</ul> |
+
+* For option 3, the steps to inject query function from the parent to the child:
+    1. Create a query functions file to separate out the queries from parent and child:
+        ```js
+        type PostWithData = (Post & { // pattern: use union operator to add fields to existing class
+            topic: { slug: string },
+            _count: { comments: number },
+            user: { name: string }
+        })
+
+        // say we're on a topic page and all posts have same slug
+        export function fetchPostsBySlug(slug: string): Promise<PostWithData[]> {
+
+        }
+
+        // say we're on the home page and want to show top posts
+        export function fetchTopPosts(): Promise<PostWithData[]> {
+
+        }
+        ```
+
+    2. Add interface for query function to the child component's props (e.g., for the `PostList` component, add `fetchData` to `PostListProps`):
+        ```js
+        interface PostListProps {
+            fetchData: () => Promise<PostWithData[]>
+        }
+        ```
+
+    3. Inside parent components `TopicShowPage` and `HomePage`, inject the appropriate fetch components to child element:
+        ```js
+        import { fetchPostsBySlug } from 'queries/posts';
+        import PostList from './post-list';
+
+        export default function TopicShowPage({ params: { slug }}) {
+            return <PostList fetchData={() => fetchPostsBySlug(slug)} />
+        }
+        ```
+        ```js
+        import { fetchTopPosts } from 'queries/posts';
+        import PostList from './post-list';
+
+        export default function HomePage() {
+            return <PostList fetchData={fetchTopPosts} />
+        }
+        ```
