@@ -1,17 +1,17 @@
-import { db } from "@/db";
-import { notFound } from "next/navigation";
+import { notFound } from 'next/navigation';
+import { db } from '@/db';
 
 interface PostShowProps {
-  postId: string
+  postId: string;
 }
 
 export default async function PostShow({ postId }: PostShowProps) {
   const post = await db.post.findFirst({
-    where: { id: postId }
+    where: { id: postId },
   });
 
   if (!post) {
-    return notFound();
+    notFound();
   }
 
   return (

@@ -20,8 +20,8 @@ export default async function PostShowPage({ params }: PostShowPageProps) {
         {'< '}Back to {slug}
       </Link>
       <PostShow postId={postId} />
-      <CommentCreateForm postId={postId} /> 
-      {/* <CommentList /> */ }
+      <CommentCreateForm postId={postId} startOpen />
+      {/* <CommentList /> */}
     </div>
   );
 }
