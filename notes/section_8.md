@@ -80,3 +80,23 @@
             return <PostList fetchData={fetchTopPosts} />
         }
         ```
+
+* You can automatically generating type information if typing it out is a hassle. E.g.,
+    - Instead of this:
+        ```js
+        export type PostWithData = (
+            Post & {
+                topic: { slug: string };
+                user: { name: string | null };
+                _count: { comments: number };
+            }
+        )
+
+        export function fetchPostsByTopicSlug(slug: string): Promise<PostWithData[]> { ... }
+        ```
+    - Could do this:
+        ```js
+        export type PostWithData = Awaited<ReturnType<typeof fetchPostsByTopicSlug>>[number];
+
+        export function fetchPostsByTopicSlug(slug: string) { ... }
+        ```
