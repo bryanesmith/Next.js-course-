@@ -14,7 +14,6 @@ interface PostShowPageProps {
 
 export default async function PostShowPage({ params }: PostShowPageProps) {
   const { slug, postId } = params;
-
   return (
     <div className="space-y-3">
       <Link className="underline decoration-solid" href={paths.topicShow(slug)}>
@@ -22,7 +21,7 @@ export default async function PostShowPage({ params }: PostShowPageProps) {
       </Link>
       <PostShow postId={postId} />
       <CommentCreateForm postId={postId} startOpen />
-      <CommentList fetchData={() => fetchCommentsByPostId(postId)} />
+      <CommentList postId={postId} />
     </div>
   );
 }
