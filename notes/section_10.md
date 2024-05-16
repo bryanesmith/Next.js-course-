@@ -53,3 +53,33 @@
             );
         }
         ```
+
+* Two options for dealing with **query strings** in Next.js:
+    1. Passing query params to a component in the `searchParams` prop:
+        ```js
+        interface SearchPageProps {
+            searchParams: {
+                term: string;
+            }
+        }
+
+        function SearchPage({searchParams}: SearchPageProps) {
+            return <div>{searchParams.term}</div>;
+        }
+        ```
+
+    2. Use `useSearchParams`:
+        ```js
+        'use client';
+
+        import { useSearchParams } from 'next/navigation';
+
+        function SearchInput() {
+            const searchParams = useSearchParams();
+            return <div>{searchParams.term}</div>;
+        }
+        ```
+
+* Couple gotchas when using query strings in Next.js:
+    1. Wrap client components using `useSearchParams` in a `Suspense` component (or you'll get strange build time warnings)
+    2. Any thing using `searchParams` prop means the route is dynamic and hence not pregenerated (cached)
